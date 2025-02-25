@@ -72,3 +72,9 @@ Also can check at http://localhost:8000/docs
    npm run dev
    ```
 2. Open your browser and navigate to `http://localhost:3000` to access the application.
+
+<img width="894" alt="image" src="https://github.com/user-attachments/assets/a01fdf9a-9c6c-4a3d-bf73-1cd5e0cba750" />
+
+<img width="895" alt="image" src="https://github.com/user-attachments/assets/f046ae79-12cb-4e51-8316-33fd88bf922b" />
+
+
