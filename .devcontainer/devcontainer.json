@@ -1,25 +1,48 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/postgres
 {
-	"name": "Python 3 & PostgreSQL",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
+	"name": "DS-160 (Full stack)",
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "devcontainer",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
+		// "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
-	"forwardPorts": [5000, 5432]
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip install --user -r requirements.txt",
+	"forwardPorts": ["backend:8000", "db:5432", 5432, 8000],
+	"portsAttributes": {
+		"5432": {"label": "PostgreSQL port", "onAutoForward": "silent"}
+	},
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter"
+			],
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"python.linting.enabled": true,
+				"[python]": {
+					"editor.formatOnSave": true
+				},
+				"python.formatting.provider": "black"
+			}
+		}
+	},
+
+	"postCreateCommand": "cd frontend && npm install"
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
