@@ -1,5 +1,5 @@
 # https://fastapi.tiangolo.com/deployment/docker/#create-the-fastapi-code
-FROM mcr.microsoft.com/devcontainers/python
+FROM python:3.13
 RUN apt-get update 
 
 # Keeps Python from generating .pyc files in the container
@@ -23,4 +23,3 @@ USER appuser
 
 # run fastapi per https://fastapi.tiangolo.com/deployment/docker/#dockerfile
 CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000"]
-# CMD ["uvicorn", "main:backend", "--host", "0.0.0.0", "--port", "8000"]

@@ -12,7 +12,6 @@ services:
       POSTGRES_USER: pguser
       POSTGRES_DB: visadb
       POSTGRES_PASSWORD: pgpass
-    # ports does not forward from a codespace
     ports:
       - "127.0.0.1:5432:5432"
 
@@ -23,9 +22,6 @@ services:
       - "127.0.0.1:8000:8000"
     depends_on:
       - db
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    # network_mode: service:db
-
 
 volumes:
   postgres-data:
