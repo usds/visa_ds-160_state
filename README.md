@@ -1,83 +1,56 @@
 # VisaApp
 
 ## Project Overview
-This project is a web application that collects user information (First Name and Last Name) using a frontend built with Next.js and stores it in a PostgreSQL database via a FastAPI backend.
+This project is a web application that will collect DS-160 information to modernize the non-immigrant visa application currently housed on ceac.state.gov. 
+It uses a frontend built with Next.js and stores it in a PostgreSQL database via a FastAPI backend.
 
 The US Web Design System (USWDS) https://designsystem.digital.gov/components/overview/ is used to build the user interface in a consistent and accessible way. The open-source TrussWorks React Library is used https://trussworks.github.io/react-uswds/?path=/docs/welcome--docs to implement parts of this design system.
 
-## Backend Setup
+## Target Architecture
+This project will be deployed to State's [CloudCity AWS Platform](https://confluence.fan.gov/pages/viewpage.action?spaceKey=CCPL&title=How+To%3A+As+a+new+user%2C+log+into+Cloud+City+resources+for+the+first+time).
+
+This application will be deployed somewhat like this:
+- Postgres on AWS Aurora (or RDS)
+- Python container running our backend on EKS
+- Static files for frontend on S3
+
+As we spin up the project, we should add details about CI/CD, deployment, links to different environments, and external APIs to this README.
+
+## Local Development
+Currently we are developing on GitHub CodeSpaces (as a stopgap until we get State development laptops).
+Instructions below assume you're using CodeSpaces, but they might work on a different Unix environment.
+
+### Local Development Architecture
+- Docker-compose (see `docker-compose.yml` in the root folder) that coordinates
+  - Python container running our Python backend in `/backend`
+  - Postgres container initialized with `init.sql` in the root folder
+- All wrapped up in a host ubuntu devcontainer (see `devcontainer/devcontainer.json`) with Node and docker-in-docker tooling. Our frontend runs on this host.
 
 ### Prerequisites
-- Python 3.11 or higher
-- PostgreSQL
+- GitHub CodeSpaces
+- Visual Studio Code
+  - Recommended extensions: `GitHub Codespaces`, `Dev Containers`
 
 ### Installation Steps
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create a virtual environment:
-   ```bash
-   python3.11 -m venv venv
-   ```
-3. Activate the virtual environment:
-   ```bash
-   source venv/bin/activate
-   ```
-4. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-5. Ensure PostgreSQL is running and create the database and table as needed.
-For example, 
-```
-% brew install postgresql
-% service postgresql start
-% createdb visaapp
-% psql -d visaapp
+1. Open the repo or branch in a Codespace using the GitHub UI.
+   - In the Code button where you normally see the Clone options, use the Codespaces tab and create a new Codespace
+   - You can open this CodeSpace in VSCode. You can also open a CodeSpace directly from VSCode
+   - Spining up the Codespace the first time takes a while - maybe grab a coffee.
+1. Once it's up, `docker compose up`
+1. http://127.0.0.1:8000/docs should show our FastAPI docs
+1. cd frontend and npm run dev should spin up local dev
+1. http://127.0.0.1:3000/ takes you to our frontend
+1. Submitting the "user" form should return a success
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL
-);
-```
+### Debugging things locally
+- If things don't show up in the browser, test if it's a Codespace port forwarding issue
+  - inside the Codespace on the host, curl localhost:8000/docs
+  - If it's returning within the Codespace but not in the browser, go to the Ports tab in VS Code and close and re-forward the port (possibly [known issue?](https://github.com/microsoft/vscode/issues/228676))
+- Using the Docker tab in VS code to restart Docker containers and delete images so they can be rebuilt
+- Right click the running container and "Attach shell" - can check processes & ports running there. as well
 
-### Running the Backend
-1. Start the FastAPI server:
-   ```bash
-   uvicorn main:app --reload
-   ```
-2. Open your browser and navigate to `http://localhost:8000` to access the application.
-Also can check at http://localhost:8000/docs
+## Code repos
+Currently we are running on two source repositories - one on the USDS GitHub and one on State GitLab.
+Once we are fully set up on State local dev environments, we will transition to solely being housed on State GitLab.
 
-## Frontend Setup
-
-### Prerequisites
-- Node.js and npm
-
-### Installation Steps
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install the required packages:
-   ```bash
-   npm install
-   ```
-
-### Running the Frontend
-1. Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
-2. Open your browser and navigate to `http://localhost:3000` to access the application.
-
-### Screenshots
-<img width="894" alt="image" src="https://github.com/user-attachments/assets/a01fdf9a-9c6c-4a3d-bf73-1cd5e0cba750" />
-
-<img width="895" alt="image" src="https://github.com/user-attachments/assets/f046ae79-12cb-4e51-8316-33fd88bf922b" />
-
-<img width="1167" alt="image" src="https://github.com/user-attachments/assets/6a81755b-ef55-471f-8b4a-becb051e2d86" />
-
-
+TODO: Instructions for pulling and pushing to both source repos.
