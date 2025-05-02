@@ -28,6 +28,7 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/code
+    command: fastapi run main.py --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   postgres-data:
