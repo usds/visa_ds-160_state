@@ -2,7 +2,8 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_camel
 import asyncpg  # Make sure to install asyncpg
 
 
@@ -31,8 +32,17 @@ app.add_middleware(
 DATABASE_URL = "postgresql://pguser:pgpass@db:5432/visadb"
 
 
+# Convert inputs to camel_case
+class BaseSchema(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+        from_attributes=True,
+    )
+
+
 # Define the Pydantic model for user data
-class UserData(BaseModel):
+class UserData(BaseSchema):
     first_name: str
     last_name: str
 
