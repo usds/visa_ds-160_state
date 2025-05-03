@@ -45,7 +45,7 @@ Instructions below assume you're using CodeSpaces, but they might work on a diff
 ### Debugging things locally
 - If things don't show up in the browser, test if it's a Codespace port forwarding issue
   - inside the Codespace on the host, curl localhost:8000/docs
-  - If it's returning within the Codespace but not in the browser, go to the Ports tab in VS Code and close and re-forward the port (possibly [known issue?](https://github.com/microsoft/vscode/issues/228676))
+  - If it's returning within the Codespace but not in the browser, go to the Ports tab in VS Code and re-confirm Private visibility for the port (possibly [known issue?](https://github.com/microsoft/vscode/issues/228676))
 - Using the Docker tab in VS code to restart Docker containers and delete images so they can be rebuilt
 - Right click the running container and "Attach shell" - can check processes & ports running there. as well
 
