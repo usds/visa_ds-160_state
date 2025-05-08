@@ -20,7 +20,6 @@
 		"8000": {"label": "backend"},
 		"5432": {"label": "postgres"}
 	},
-	// "forwardPorts": ["backend:8000", 8000],
 
 	// Configure tool-specific properties.
 	"customizations": {
