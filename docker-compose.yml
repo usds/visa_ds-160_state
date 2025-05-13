@@ -21,6 +21,9 @@ services:
   backend:
     build:
       context: ./backend
+      args:  # match VS Code User / Group ID so generated files share permissions
+        UID: 1000
+        GID: 1000
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -28,6 +31,8 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/code
+    environment:
+      DB_CONNECTION_STRING: "postgresql://pguser:pgpass@db:5432/visadb"
     command: fastapi run main.py --host 0.0.0.0 --port 8000 --reload
 
 volumes:
