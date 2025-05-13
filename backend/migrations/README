@@ -1,4 +1,13 @@
-To run migrations:
-```
-docker compose run backend alembic revision -m "create user table"
-```
+# Database Migrations
+
+The database models are defined by SQLAlchemy in the `models` folder, and migrations (i.e. schema changes) are managed by Alembic.
+
+## To create a migration
+
+1. Create a new SQLAlchemy model in the `models` folder. It must extend `Base`.
+1. Import the model in `models/__init__.py`.
+1. Make sure your local database is up to date; `docker compose run backend alembic upgrade head`
+1. Run `docker compose run backend alembic revision --autogenerate -m "migration description"`
+1. Verify the new migration file looks correct; edit the file if needed.
+1. Run `docker compose run backend alembic upgrade head` to apply the migration locally.
+1. Your local database should be updated as expected.
