@@ -1,0 +1,4 @@
+To run migrations:
+```
+docker compose run backend alembic revision -m "create user table"
+```
