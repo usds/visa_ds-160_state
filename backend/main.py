@@ -1,22 +1,29 @@
-from contextlib import asynccontextmanager
-from typing import AsyncGenerator
-from fastapi import FastAPI, HTTPException
+from typing import Annotated
+import os
+
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 from pydantic.alias_generators import to_camel
-import asyncpg  # Make sure to install asyncpg
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from models import User as UserModel
+
+db_url = os.environ.get("DB_CONNECTION_STRING")
+engine = create_engine(db_url)
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
-# Lifespan function to manage database connection
-@asynccontextmanager
-async def lifespan(my_app: FastAPI) -> AsyncGenerator:
-    my_app.state.db = await asyncpg.connect(DATABASE_URL)
-    yield  # This will run the application
-    await my_app.state.db.close()  # Close the database connection on shutdown
+def get_session():
+    with Session() as session:
+        yield session
 
 
-# Use the lifespan in the FastAPI app
-app = FastAPI(lifespan=lifespan)
+SessionDep = Annotated[Session, Depends(get_session)]
+
+app = FastAPI()
 
 # Allow CORS for all origins (you can restrict this to specific origins if needed)
 app.add_middleware(
@@ -27,9 +34,6 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods (GET, POST, OPTIONS, etc.)
     allow_headers=["*"],  # Allows all headers
 )
-
-# Update with your actual database credentials
-DATABASE_URL = "postgresql://pguser:pgpass@db:5432/visadb"
 
 
 # Convert inputs to camel_case
@@ -42,21 +46,28 @@ class BaseSchema(BaseModel):
 
 
 # Define the Pydantic model for user data
-class UserData(BaseSchema):
-    first_name: str
-    last_name: str
+class User(BaseSchema):
+    email: EmailStr
 
 
 @app.post("/api/users")
-async def create_user(user_data: UserData):
-    conn = app.state.db  # Use the connection stored in app.state
-    try:
-        # Insert the user data into the database
-        await conn.execute(
-            "INSERT INTO users(first_name, last_name) VALUES($1, $2)",
-            user_data.first_name,
-            user_data.last_name,
-        )
-        return {"message": "User added successfully!"}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e)) from e
+async def create_user(user: User, session: SessionDep) -> User:
+    db_user = UserModel(email=user.email)
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    return db_user
+
+
+@app.get("/api/users")
+async def get_all_users():
+    users_query = session.query(UserModel)
+    return users_query.all()
+
+
+@app.delete("/api/users/{email}")
+async def delete_user(email: EmailStr):
+    user = session.query(UserModel).filter(UserModel.email == email).one()
+    session.delete(user)
+    session.commit()
+    return {"user deleted": user.email}
