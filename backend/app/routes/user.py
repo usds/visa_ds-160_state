@@ -11,12 +11,18 @@ router = APIRouter()
 
 @router.post("/", response_model=User)
 async def create_user(user: User, session: Session = Depends(get_session)):
+    existing_user = (
+        session.query(UserModel).filter(UserModel.email == user.email).one_or_none()
+    )
+    if existing_user:
+        raise HTTPException(
+            status_code=409, detail="User with this email already exists"
+        )
     db_user = UserModel(email=user.email)
     session.add(db_user)
     session.commit()
     session.refresh(db_user)
-    # what to return here?
-    return db_user
+    return User(email=db_user.email)
 
 
 @router.get("/{email}", response_model=UserWithApplications)
@@ -43,7 +49,7 @@ async def get_user(email: str, session: Session = Depends(get_session)):
 @router.get("/", response_model=list[User])
 async def get_all_users(session: Session = Depends(get_session)):
     users_query = session.query(UserModel)
-    return users_query.all()
+    return [User(email=db_user.email) for db_user in users_query.all()]
 
 
 @router.delete("/{email}")
