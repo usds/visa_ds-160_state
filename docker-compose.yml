@@ -33,7 +33,7 @@ services:
     environment:
       DB_CONNECTION_STRING: "postgresql://pguser:pgpass@db:5432/visadb"
     command: >
-      sh -c "alembic upgrade head && fastapi run main.py --host 0.0.0.0 --port 8000 --reload"
+      sh -c "alembic upgrade head && fastapi run app/main.py --host 0.0.0.0 --port 8000 --reload"
 
 volumes:
   postgres-data:

@@ -28,4 +28,4 @@ RUN groupadd --gid $GID appgroup && \
 USER appuser
 
 # run fastapi per https://fastapi.tiangolo.com/deployment/docker/#dockerfile
-CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000" "--reload"]
+CMD ["fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8000" "--reload"]
