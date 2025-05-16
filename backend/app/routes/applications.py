@@ -41,6 +41,42 @@ async def get_application(application_id: str, session: Session = Depends(get_se
     return application
 
 
+@router.get("/", response_model=list[Application])
+async def get_all_applications(
+    user_email: EmailStr | None = None, session: Session = Depends(get_session)
+):
+    if user_email:
+        db_user = session.query(DBUser).filter(DBUser.email == user_email).one_or_none()
+        if not db_user:
+            raise HTTPException(status_code=404, detail="User not found")
+        db_applications = (
+            session.query(DBApplication).filter(DBApplication.user == db_user.id).all()
+        )
+        applications = [
+            Application(
+                id=db_application.id,
+                user_email=user_email,
+                data=ApplicationData(**(db_application.data or {})),
+            )
+            for db_application in db_applications
+        ]
+    else:
+        db_applications = (
+            session.query(DBApplication, DBUser.email)
+            .filter(DBApplication.user == DBUser.id)
+            .all()
+        )
+        applications = [
+            Application(
+                id=db_application.id,
+                user_email=user_email,
+                data=ApplicationData(**(db_application.data or {})),
+            )
+            for db_application, user_email in db_applications
+        ]
+    return applications
+
+
 @router.patch("/{application_id}", response_model=Application)
 async def update_application(
     application_id: str,
