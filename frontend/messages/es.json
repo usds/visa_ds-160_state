@@ -1,0 +1,27 @@
+{
+  "Home": {
+    "enter": "Entrar"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "label": "Language"
+  },
+  "UserForm": {
+    "header": "Registro de Usuario",
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "submit": "Enviar"
+  },
+  "UserFormPage": {
+    "success-message": "¡Formulario enviado con éxito!",
+    "server-error-message": "Ocurrió un error del servidor al enviar el formulario. Por favor, inténtelo de nuevo.",
+    "unknown-error-message": "Ocurrió un error desconocido al enviar el formulario. Por favor, inténtelo de nuevo.",
+    "header": "Registro de Usuario"
+  },
+  "AppHeader": {
+    "home": "Hogar",
+    "project-name": "Solicitud de Visa de No Inmigrante DS-160"
+  }
+}

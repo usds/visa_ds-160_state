@@ -1,0 +1,27 @@
+{
+    "Home": {
+        "enter": "Entrer"
+    },
+    "LocaleSwitcher": {
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "label": "Language"
+    },
+    "UserForm": {
+        "header": "Enregistrement de l'utilisateur",
+        "first-name": "Prénom",
+        "last-name": "Nom de famille",
+        "submit": "Envoyer"
+    },
+    "UserFormPage": {
+        "success-message": "Formulaire envoyé avec succès !",
+        "server-error-message": "Une erreur serveur s'est produite lors de l'envoi du formulaire. Veuillez réessayer.",
+        "unknown-error-message": "Une erreur inconnue s'est produite lors de l'envoi du formulaire. Veuillez réessayer.",
+        "header": "Enregistrement de l'utilisateur"
+    },
+    "AppHeader": {
+        "home": "Accueil",
+        "project-name": "Demande de visa non-immigrant DS-160"
+    }
+}

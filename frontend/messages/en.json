@@ -1,0 +1,25 @@
+{
+  "Home": {
+    "enter": "Enter"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français"
+  },
+  "UserForm": {
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "submit": "Submit"
+  },
+  "UserFormPage": {
+    "success": "Form submitted successfully!",
+    "server-error-message": "A server error occurred while submitting the form. Please try again.",
+    "unknown-error-message": "An unknown error occurred while submitting the form. Please try again.",
+    "header": "User Registration"
+  },
+  "AppHeader": {
+    "home": "Home",
+    "project-name": "DS-160 Nonimmigrant Visa Application"
+  }
+}
