@@ -15,7 +15,7 @@ class Session(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
     last_active_at: Mapped[datetime.datetime] = mapped_column(
         DateTime,
-        default=lambda: datetime.datetime.now(datetime.timezone.utc, index=True),
+        default=lambda: datetime.datetime.now(datetime.timezone.utc),
         index=True,
     )
 
