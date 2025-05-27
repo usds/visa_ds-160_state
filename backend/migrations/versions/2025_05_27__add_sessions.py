@@ -26,13 +26,16 @@ def upgrade() -> None:
         sa.Column("id", sa.String(length=36), primary_key=True),
         sa.Column("user_id", sa.Integer(), sa.ForeignKey("user.id"), nullable=False),
         sa.Column(
-            "created_at", sa.DateTime(), nullable=False, server_default=sa.func.now()
+            "last_active_at",
+            sa.DateTime(),
+            nullable=False,
+            server_default=sa.func.now(),
         ),
     )
-    op.create_index("ix_session_created_at", "session", ["created_at"])
+    op.create_index("ix_session_last_active_at", "session", ["last_active_at"])
 
 
 def downgrade() -> None:
     """Downgrade schema."""
-    op.drop_index("ix_session_created_at", table_name="session")
+    op.drop_index("ix_session_last_active_at", table_name="session")
     op.drop_table("session")

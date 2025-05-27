@@ -1,3 +1,5 @@
+import datetime
+
 from fastapi import Depends, HTTPException, Cookie, status
 from sqlalchemy.orm import Session
 from app.models.session_model import Session as SessionModel
@@ -30,6 +32,9 @@ def get_current_user(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Session expired"
         )
+
+    db_session.last_active_at = datetime.datetime.now(datetime.timezone.utc)
+    db.commit()
     user = db.query(UserModel).filter(UserModel.id == db_session.user_id).one_or_none()
     if not user:
         raise HTTPException(

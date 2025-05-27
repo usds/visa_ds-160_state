@@ -63,7 +63,7 @@ async def cleanup_expired_sessions(db: Session = Depends(get_db)):
     )
     deleted_count = (
         db.query(SessionModel)
-        .filter(SessionModel.created_at < expiration_time)
+        .filter(SessionModel.last_active_at < expiration_time)
         .delete(synchronize_session=False)
     )
     db.commit()
