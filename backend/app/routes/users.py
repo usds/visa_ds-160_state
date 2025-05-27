@@ -4,13 +4,13 @@ from app.models.user_model import User as UserModel
 from app.models.application_model import Application as ApplicationModel
 from app.schemas.user import User, UserWithApplications
 from app.schemas.application import Application, ApplicationData
-from app.db import get_session
+from app.db import get_db
 
 router = APIRouter()
 
 
 @router.post("/", response_model=User)
-async def create_user(user: User, session: Session = Depends(get_session)):
+async def create_user(user: User, session: Session = Depends(get_db)):
     existing_user = (
         session.query(UserModel).filter(UserModel.email == user.email).one_or_none()
     )
@@ -26,7 +26,7 @@ async def create_user(user: User, session: Session = Depends(get_session)):
 
 
 @router.get("/{email}", response_model=UserWithApplications)
-async def get_user(email: str, session: Session = Depends(get_session)):
+async def get_user(email: str, session: Session = Depends(get_db)):
     db_user = session.query(UserModel).filter(UserModel.email == email).one_or_none()
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -47,13 +47,13 @@ async def get_user(email: str, session: Session = Depends(get_session)):
 
 
 @router.get("/", response_model=list[User])
-async def get_all_users(session: Session = Depends(get_session)):
+async def get_all_users(session: Session = Depends(get_db)):
     users_query = session.query(UserModel)
     return [User(email=db_user.email) for db_user in users_query.all()]
 
 
 @router.delete("/{email}")
-async def delete_user(email: str, session: Session = Depends(get_session)):
+async def delete_user(email: str, session: Session = Depends(get_db)):
     user = session.query(UserModel).filter(UserModel.email == email).one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

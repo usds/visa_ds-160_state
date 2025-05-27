@@ -5,14 +5,14 @@ from pydantic import EmailStr
 from app.models.user_model import User as DBUser
 from app.models.application_model import Application as DBApplication
 from app.schemas.application import Application, ApplicationData
-from app.db import get_session
+from app.db import get_db
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Application)
 async def create_new_application(
-    user_email: EmailStr, session: Session = Depends(get_session)
+    user_email: EmailStr, session: Session = Depends(get_db)
 ):
     db_user = session.query(DBUser).filter(DBUser.email == user_email).one_or_none()
     if not db_user:
@@ -30,7 +30,7 @@ async def create_new_application(
 
 
 @router.get("/{application_id}", response_model=Application)
-async def get_application(application_id: str, session: Session = Depends(get_session)):
+async def get_application(application_id: str, session: Session = Depends(get_db)):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
         raise HTTPException(status_code=404, detail="Application not found")
@@ -43,7 +43,7 @@ async def get_application(application_id: str, session: Session = Depends(get_se
 
 @router.get("/", response_model=list[Application])
 async def get_all_applications(
-    user_email: EmailStr | None = None, session: Session = Depends(get_session)
+    user_email: EmailStr | None = None, session: Session = Depends(get_db)
 ):
     if user_email:
         db_user = session.query(DBUser).filter(DBUser.email == user_email).one_or_none()
@@ -81,7 +81,7 @@ async def get_all_applications(
 async def update_application(
     application_id: str,
     application_data: ApplicationData,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_db),
 ):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
@@ -96,9 +96,7 @@ async def update_application(
 
 
 @router.delete("/{application_id}")
-async def delete_application(
-    application_id: str, session: Session = Depends(get_session)
-):
+async def delete_application(application_id: str, session: Session = Depends(get_db)):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
         raise HTTPException(status_code=404, detail="Application not found")
