@@ -2,8 +2,10 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_camel
 import asyncpg  # Make sure to install asyncpg
+
 
 # Lifespan function to manage database connection
 @asynccontextmanager
@@ -11,6 +13,7 @@ async def lifespan(my_app: FastAPI) -> AsyncGenerator:
     my_app.state.db = await asyncpg.connect(DATABASE_URL)
     yield  # This will run the application
     await my_app.state.db.close()  # Close the database connection on shutdown
+
 
 # Use the lifespan in the FastAPI app
 app = FastAPI(lifespan=lifespan)
@@ -26,10 +29,20 @@ app.add_middleware(
 )
 
 # Update with your actual database credentials
-DATABASE_URL = "postgresql://postgres:postgres@localhost/visaapp"
+DATABASE_URL = "postgresql://pguser:pgpass@db:5432/visadb"
+
+
+# Convert inputs to camel_case
+class BaseSchema(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+        from_attributes=True,
+    )
+
 
 # Define the Pydantic model for user data
-class UserData(BaseModel):
+class UserData(BaseSchema):
     first_name: str
     last_name: str
 
@@ -42,7 +55,7 @@ async def create_user(user_data: UserData):
         await conn.execute(
             "INSERT INTO users(first_name, last_name) VALUES($1, $2)",
             user_data.first_name,
-            user_data.last_name
+            user_data.last_name,
         )
         return {"message": "User added successfully!"}
     except Exception as e:

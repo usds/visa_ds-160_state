@@ -1,0 +1,34 @@
+services:
+
+  db:
+    image: postgres:latest
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pguser -d visadb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_DB: visadb
+      POSTGRES_PASSWORD: pgpass
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/code
+    command: fastapi run main.py --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres-data:
