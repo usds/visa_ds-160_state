@@ -6,11 +6,14 @@ import "@trussworks/react-uswds/lib/index.css";
 import "@/app/globals.css";
 
 import { getUsers } from "@/api/users";
-import { useQuery } from "@tanstack/react-query";
+import { login } from "@/api/session";
+import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@trussworks/react-uswds";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const Login = () => {
+  const QueryClient = useQueryClient();
   const {
     data: users,
     isLoading,
@@ -19,6 +22,23 @@ export const Login = () => {
     queryKey: ["users"],
     queryFn: getUsers,
   });
+
+  const router = useRouter();
+  const { mutate, isPending: loginPending } = useMutation({
+    mutationFn: login,
+    onMutate: () => {},
+    onSuccess: (user) => {
+      QueryClient.setQueryData(["sessionuser"], user);
+      router.push("/account/profile");
+      return QueryClient.invalidateQueries({
+        queryKey: ["sessionuser"],
+      });
+    },
+  });
+
+  const loginUser = (email: string) => {
+    mutate(email);
+  };
 
   return (
     <div>
@@ -33,11 +53,14 @@ export const Login = () => {
         ) : (
           users.map((user) => (
             <li key={user.email} className="margin-bottom-1">
-              <Link href={`/account/${user.email}/applications`}>
-                <Button type="button" key={user.email}>
-                  Log in as {user.email}
-                </Button>
-              </Link>
+              <Button
+                type="button"
+                key={user.email}
+                onClick={() => loginUser(user.email)}
+                disabled={loginPending}
+              >
+                Log in as {user.email}
+              </Button>
             </li>
           ))
         )}

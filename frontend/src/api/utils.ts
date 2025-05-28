@@ -7,7 +7,12 @@ export async function fetchJson<T>(
   options["credentials"] = "include"; // Include cookies in the request
   const response = await fetch(url, options);
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw {
+      status: response.status,
+      statusText: response.statusText,
+      url,
+      message: `HTTP error! status: ${response.status}`,
+    };
   }
   return response.json();
 }

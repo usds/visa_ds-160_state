@@ -5,19 +5,10 @@ import "@trussworks/react-uswds/lib/uswds.css";
 import "@trussworks/react-uswds/lib/index.css";
 import "@/app/globals.css";
 
-import { getUserFromSession } from "@/api/session";
-import { useQuery } from "@tanstack/react-query";
-import type { User } from "@/types";
+import { useUser } from "@/providers/UserContext";
 
 export const Profile = () => {
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery<User>({
-    queryKey: ["sessionuser"],
-    queryFn: getUserFromSession,
-  });
+  const { user, isLoading, error } = useUser();
 
   return (
     <div>
@@ -27,8 +18,10 @@ export const Profile = () => {
         <p>Loading...</p>
       ) : error ? (
         <p>Error: {error.message}</p>
-      ) : (
+      ) : user ? (
         <p>Logged in as: {user.email}</p>
+      ) : (
+        <p>You are not logged in.</p>
       )}
     </div>
   );

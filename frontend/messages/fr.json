@@ -79,6 +79,7 @@
         "my-account": "Mon compte",
         "application": "Demande",
         "profile": "Profil",
+        "login": "Connexion",
         "logout": "Déconnexion",
         "resources": "Ressources"
     },
