@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.user_model import User as UserModel
 from app.models.session_model import Session as SessionModel
 from app.schemas.session import Session as SessionSchema
+from app.schemas.session import LoginInfo
 from app.schemas.user import User as UserSchema
 from app.db import get_db
 from app.dependencies.session import get_current_user
@@ -15,9 +16,9 @@ router = APIRouter()
 SESSION_COOKIE_NAME = "session_id"
 
 
-@router.post("/login", response_model=SessionSchema)
-async def login(email: str, response: Response, db: Session = Depends(get_db)):
-    user = db.query(UserModel).filter(UserModel.email == email).one_or_none()
+@router.post("/login", response_model=UserSchema)
+async def login(info: LoginInfo, response: Response, db: Session = Depends(get_db)):
+    user = db.query(UserModel).filter(UserModel.email == info.email).one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     # Create session
@@ -30,7 +31,7 @@ async def login(email: str, response: Response, db: Session = Depends(get_db)):
     response.set_cookie(
         key=SESSION_COOKIE_NAME, value=session_id, httponly=True, samesite="lax"
     )
-    return db_session
+    return user
 
 
 @router.post("/logout")
@@ -51,8 +52,10 @@ async def logout(
     return {"detail": "Logged out"}
 
 
-@router.get("/me", response_model=UserSchema)
-async def get_me(current_user: UserModel = Depends(get_current_user)):
+@router.get("/user", response_model=UserSchema)
+async def get_session_user(current_user: UserModel = Depends(get_current_user)):
+    if not current_user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
     return current_user
 
 
