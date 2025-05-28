@@ -10,7 +10,6 @@ services:
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_USER: pguser
       POSTGRES_DB: visadb
@@ -21,6 +20,9 @@ services:
   backend:
     build:
       context: ./backend
+      args:  # match VS Code User / Group ID so generated files share permissions
+        UID: 1000
+        GID: 1000
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -28,7 +30,10 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/code
-    command: fastapi run main.py --host 0.0.0.0 --port 8000 --reload
+    environment:
+      DB_CONNECTION_STRING: "postgresql://pguser:pgpass@db:5432/visadb"
+    command: >
+      sh -c "alembic upgrade head && fastapi run app/main.py --host 0.0.0.0 --port 8000 --reload"
 
 volumes:
   postgres-data:

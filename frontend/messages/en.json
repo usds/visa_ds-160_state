@@ -91,5 +91,15 @@
     "october": "10 - October",
     "november": "11 - November",
     "december": "12 - December"
+  },
+  "ApplicationLayout": {
+    "getting-started": "Getting Started",
+    "travel": "Travel",
+    "family": "Family",
+    "work-education": "Work & Education",
+    "us-contacts": "U.S. Contacts",
+    "security": "Security",
+    "passport-details": "Passport Details",
+    "name": "Name"
   }
 }

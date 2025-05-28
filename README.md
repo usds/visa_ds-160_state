@@ -49,6 +49,9 @@ Instructions below assume you're using CodeSpaces, but they might work on a diff
 - Using the Docker tab in VS code to restart Docker containers and delete images so they can be rebuilt
 - Right click the running container and "Attach shell" - can check processes & ports running there. as well
 
+### How to do common development tasks
+- Database migrations: see `backend/migrations/README.md`
+
 ## Code repos
 Currently we are running on two source repositories - one on the USDS GitHub and one on State GitLab.
 Once we are fully set up on State local dev environments, we will transition to solely being housed on State GitLab.
