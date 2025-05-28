@@ -25,7 +25,7 @@ export default function Home() {
             height={100}
           />
         </div>
-        <Link href="/user-form">
+        <Link href="/account/login">
           <button className="bg-blue-500 text-black px-4 py-2 rounded mt-4">
             {t("enter")}
           </button>
