@@ -5,24 +5,23 @@ from pydantic import EmailStr
 from app.models.user_model import User as DBUser
 from app.models.application_model import Application as DBApplication
 from app.schemas.application import Application, ApplicationData
-from app.db import get_session
+from app.db import get_db
+from app.dependencies.session import get_current_user
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Application)
 async def create_new_application(
-    user_email: EmailStr, session: Session = Depends(get_session)
+    session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
 ):
-    db_user = session.query(DBUser).filter(DBUser.email == user_email).one_or_none()
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
-    db_application = DBApplication(user=db_user.id, data={})
+    db_application = DBApplication(user=current_user.id, data={})
     session.add(db_application)
     session.commit()
     session.refresh(db_application)
     application = Application(
-        user_email=db_user.email,
+        user_email=current_user.email,
         id=db_application.id,
         data=ApplicationData(**(db_application.data or {})),
     )
@@ -30,10 +29,16 @@ async def create_new_application(
 
 
 @router.get("/{application_id}", response_model=Application)
-async def get_application(application_id: str, session: Session = Depends(get_session)):
+async def get_application(
+    application_id: str,
+    session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
+):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
         raise HTTPException(status_code=404, detail="Application not found")
+    if db_application.user != current_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
     application = Application(
         id=db_application.id,
         data=ApplicationData(**(db_application.data or {})),
@@ -43,37 +48,20 @@ async def get_application(application_id: str, session: Session = Depends(get_se
 
 @router.get("/", response_model=list[Application])
 async def get_all_applications(
-    user_email: EmailStr | None = None, session: Session = Depends(get_session)
+    session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
 ):
-    if user_email:
-        db_user = session.query(DBUser).filter(DBUser.email == user_email).one_or_none()
-        if not db_user:
-            raise HTTPException(status_code=404, detail="User not found")
-        db_applications = (
-            session.query(DBApplication).filter(DBApplication.user == db_user.id).all()
+    db_applications = (
+        session.query(DBApplication).filter(DBApplication.user == current_user.id).all()
+    )
+    applications = [
+        Application(
+            id=db_application.id,
+            user_email=current_user.email,
+            data=ApplicationData(**(db_application.data or {})),
         )
-        applications = [
-            Application(
-                id=db_application.id,
-                user_email=user_email,
-                data=ApplicationData(**(db_application.data or {})),
-            )
-            for db_application in db_applications
-        ]
-    else:
-        db_applications = (
-            session.query(DBApplication, DBUser.email)
-            .filter(DBApplication.user == DBUser.id)
-            .all()
-        )
-        applications = [
-            Application(
-                id=db_application.id,
-                user_email=user_email,
-                data=ApplicationData(**(db_application.data or {})),
-            )
-            for db_application, user_email in db_applications
-        ]
+        for db_application in db_applications
+    ]
     return applications
 
 
@@ -81,11 +69,14 @@ async def get_all_applications(
 async def update_application(
     application_id: str,
     application_data: ApplicationData,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
 ):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
         raise HTTPException(status_code=404, detail="Application not found")
+    if db_application.user != current_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
     db_application.data = application_data.model_dump(mode="json")
     session.commit()
     session.refresh(db_application)
@@ -97,11 +88,15 @@ async def update_application(
 
 @router.delete("/{application_id}")
 async def delete_application(
-    application_id: str, session: Session = Depends(get_session)
+    application_id: str,
+    session: Session = Depends(get_db),
+    current_user: DBUser = Depends(get_current_user),
 ):
     db_application = session.get(DBApplication, application_id)
     if not db_application:
         raise HTTPException(status_code=404, detail="Application not found")
+    if db_application.user != current_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
     session.delete(db_application)
     session.commit()
     return {"application deleted": str(db_application.id)}

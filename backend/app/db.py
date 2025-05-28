@@ -6,6 +6,7 @@ db_url = os.environ.get("DB_CONNECTION_STRING")
 engine = create_engine(db_url)
 SessionLocal = sessionmaker(bind=engine)
 
-def get_session():
+
+def get_db():
     with SessionLocal() as session:
         yield session
