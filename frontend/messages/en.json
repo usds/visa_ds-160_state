@@ -1,0 +1,105 @@
+{
+  "Home": {
+    "enter": "Enter"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "label": "Language"
+  },
+  "UserForm": {
+    "header": "User Registration",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "submit": "Submit"
+  },
+  "UserFormPage": {
+    "success": "Form submitted successfully!",
+    "server-error-message": "A server error occurred while submitting the form. Please try again.",
+    "unknown-error-message": "An unknown error occurred while submitting the form. Please try again.",
+    "header": "User Registration"
+  },
+  "AppHeader": {
+    "home": "Home",
+    "project-name": "DS-160 Application",
+    "my-account": "My Account",
+    "application": "Application",
+    "profile": "Profile",
+    "logout": "Logout",
+    "resources": "Resources"
+  },
+  "ApplicationLayout": {
+    "getting-started": "Getting Started",
+    "travel": "Travel",
+    "family": "Family",
+    "work-education": "Work & Education",
+    "us-contacts": "U.S. Contacts",
+    "security": "Security",
+    "passport-details": "Passport Details",
+    "name": "Name"
+  },
+  "Names": {
+    "alert-header": "Answers to these questions should match what is written in your passport",
+    "current-name-header": "Name on your current passport",
+    "surnames-label": "Surnames (Last Names)",
+    "surnames-hint": "Enter all surnames (last names) as listed in your passport.",
+    "given-names-label": "Given (First) Names",
+    "given-names-hint": "Enter your first names as listed in your passport.",
+    "native-alphabet-label": "Full Name in Native Alphabet",
+    "does-not-apply": "Does not apply",
+    "previous-names-header": "Previous names",
+    "previous-names-subheader": "Have you ever used any other names?",
+    "previous-names-hint": "for example: maiden name, religious, alias, etc",
+    "yes": "yes",
+    "no": "no",
+    "name1": "Name 1",
+    "add-another-name": "+ Add another name",
+    "telecode-header": "Do you have a telecode that represents your name?",
+    "telecode-hint": "A telecode is a 4 digit code that represents characters in some non-Roman alphabet names",
+    "submit": "Next"
+  },
+  "PassportDetails": {
+    "header": "Passport Details",
+    "doc-type-header": "What type of passport or travel document do you have?",
+    "required-fields": "Required fields are marked with an asterisk",
+    "doc-type-hint": "Enter the information on the travel document you will be using when traveling to the U.S.",
+    "doc-type-select-label": "Your travel document should be a valid, unexpired passport or other valid, unexpired documentation that is sufficient to establish your identity and nationality.",
+    "issuer-header": "Who issued your passport?",
+    "issuer-select-label": "Choose the country or authority that issued the document you will use to travel to the United States.",
+    "issuer-select-option": "Select country / authority",
+    "regular-passport": "Regular / Tourist passport",
+    "book-number-header": "Passport Book Number",
+    "book-number-hint": "The Passport Book Number is commonly called the inventory control number. You may or may not have a Passport Book Number on your passport.",
+    "book-number-label": "The location of the Passport Book Number on your passport may vary depending on the country that issued your passport. Please contact your passport issuing authority if you are unable to determine whether or not your passport contains a Passport Book Number.",
+    "no-book-number-label": "My passport does not have a number",
+    "issuance-date": "Issuance Date",
+    "month": "Month",
+    "day": "Day",
+    "year": "Year",
+    "expiration-date": "Expiration Date",
+    "submit": "Continue",
+    "january": "01 - January",
+    "february": "02 - February",
+    "march": "03 - March",
+    "april": "04 - April",
+    "may": "05 - May",
+    "june": "06 - June",
+    "july": "07 - July",
+    "august": "08 - August",
+    "september": "09 - September",
+    "october": "10 - October",
+    "november": "11 - November",
+    "december": "12 - December"
+  },
+  "ApplicationLayout": {
+    "getting-started": "Getting Started",
+    "travel": "Travel",
+    "family": "Family",
+    "work-education": "Work & Education",
+    "us-contacts": "U.S. Contacts",
+    "security": "Security",
+    "passport-details": "Passport Details",
+    "name": "Name"
+  }
+}

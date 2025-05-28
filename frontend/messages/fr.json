@@ -1,0 +1,95 @@
+{
+    "Home": {
+        "enter": "Entrer"
+    },
+    "LocaleSwitcher": {
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "label": "Language"
+    },
+    "UserForm": {
+        "header": "Enregistrement de l'utilisateur",
+        "first-name": "Prénom",
+        "last-name": "Nom de famille",
+        "submit": "Envoyer"
+    },
+    "UserFormPage": {
+        "success-message": "Formulaire envoyé avec succès !",
+        "server-error-message": "Une erreur serveur s'est produite lors de l'envoi du formulaire. Veuillez réessayer.",
+        "unknown-error-message": "Une erreur inconnue s'est produite lors de l'envoi du formulaire. Veuillez réessayer.",
+        "header": "Enregistrement de l'utilisateur"
+    },
+    "Names": {
+        "alert-header": "Les réponses à ces questions doivent correspondre à ce qui est écrit dans votre passeport",
+        "current-name-header": "Nom figurant sur votre passeport actuel",
+        "surnames-label": "Noms de famille",
+        "surnames-hint": "Entrez tous les noms de famille tels qu'ils figurent dans votre passeport.",
+        "given-names-label": "Prénoms",
+        "given-names-hint": "Entrez tous vos prénoms tels qu'ils figurent dans votre passeport.",
+        "native-alphabet-label": "Nom complet en alphabet natif",
+        "does-not-apply": "Ne s'applique pas",
+        "previous-names-header": "Noms précédents",
+        "previous-names-subheader": "Avez-vous déjà utilisé d'autres noms ?",
+        "previous-names-hint": "c.-à-d. nom de jeune fille, religieux, alias, etc.",
+        "yes": "oui",
+        "no": "non",
+        "name1": "Nom 1",
+        "add-another-name": "+ Ajouter un autre nom",
+        "telecode-header": "Avez-vous un télécode qui représente votre nom ?",
+        "telecode-hint": "Un télécode est un code à 4 chiffres qui représente des caractères dans certains noms en alphabet non romain",
+        "submit": "Suivant"
+    },
+    "PassportDetails": {
+        "header": "Détails du passeport",
+        "doc-type-header": "Quel type de passeport ou de document de voyage avez-vous ?",
+        "required-fields": "Les champs marqués d'un astérisque sont obligatoires.",
+        "doc-type-hint": "Entrez les informations sur le document de voyage que vous utiliserez pour voyager aux États-Unis.",
+        "doc-type-select-label": "Votre document de voyage doit être un passeport valide et non expiré ou une autre documentation valide et non expirée suffisante pour établir votre identité et votre nationalité.",
+        "issuer-header": "Qui a délivré votre passeport ?",
+        "issuer-select-label": "Choisissez le pays ou l'autorité qui a délivré le document que vous utiliserez pour voyager aux États-Unis.",
+        "issuer-select-option": "Sélectionnez le pays / l'autorité",
+        "regular-passport": "Passeport régulier / de tourisme",
+        "book-number-header": "Numéro de carnet de passeport",
+        "book-number-hint": "Le numéro de carnet de passeport est communément appelé le numéro de contrôle d'inventaire. Il est possible que votre passeport ait ou non un numéro de carnet de passeport.",
+        "book-number-label": "L'emplacement du numéro de carnet de passeport sur votre passeport peut varier en fonction du pays qui a délivré votre passeport. Veuillez contacter l'autorité émettrice de votre passeport si vous ne parvenez pas à déterminer si votre passeport contient un numéro de carnet de passeport.",
+        "no-book-number-label": "Mon passeport n'a pas de numéro",
+        "issuance-date": "Date de délivrance",
+        "month": "Mois",
+        "day": "Jour",
+        "year": "Année",
+        "expiration-date": "Date d'expiration",
+        "submit": "Continuer",
+        "january": "01 - Janvier",
+        "february": "02 - Février",
+        "march": "03 - Mars",
+        "april": "04 - Avril",
+        "may": "05 - Mai",
+        "june": "06 - Juin",
+        "july": "07 - Juillet",
+        "august": "08 - Août",
+        "september": "09 - Septembre",
+        "october": "10 - Octobre",
+        "november": "11 - Novembre",
+        "december": "12 - Décembre"
+    },
+    "AppHeader": {
+        "home": "Accueil",
+        "project-name": "Demande de DS-160",
+        "my-account": "Mon compte",
+        "application": "Demande",
+        "profile": "Profil",
+        "logout": "Déconnexion",
+        "resources": "Ressources"
+    },
+    "ApplicationLayout": {
+        "getting-started": "Commencer",
+        "travel": "Voyage",
+        "family": "Famille",
+        "work-education": "Travail et éducation",
+        "us-contacts": "Contacts aux États-Unis",
+        "security": "Sécurité",
+        "passport-details": "Détails du passeport",
+        "name": "Nom"
+    }
+}

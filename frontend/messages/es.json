@@ -1,0 +1,95 @@
+{
+  "Home": {
+    "enter": "Entrar"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "label": "Language"
+  },
+  "UserForm": {
+    "header": "Registro de Usuario",
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "submit": "Enviar"
+  },
+  "UserFormPage": {
+    "success-message": "¡Formulario enviado con éxito!",
+    "server-error-message": "Ocurrió un error del servidor al enviar el formulario. Por favor, inténtelo de nuevo.",
+    "unknown-error-message": "Ocurrió un error desconocido al enviar el formulario. Por favor, inténtelo de nuevo.",
+    "header": "Registro de Usuario"
+  },
+  "Names": {
+    "alert-header": "Las respuestas a estas preguntas deben coincidir con lo que está escrito en su pasaporte",
+    "current-name-header": "Nombre en su pasaporte actual",
+    "surnames-label": "Apellidos",
+    "surnames-hint": "Ingrese todos los apellidos tal como aparecen en su pasaporte.",
+    "given-names-label": "Nombres de pila",
+    "given-names-hint": "Ingrese todos los nombres de pila tal como aparecen en su pasaporte.",
+    "native-alphabet-label": "Nombre completo en alfabeto nativo",
+    "does-not-apply": "No aplica",
+    "previous-names-header": "Nombres anteriores",
+    "previous-names-subheader": "¿Ha usado algún otro nombre?",
+    "previous-names-hint": "por ejemplo: apellidos de soltera, religiosos, profesionales, alias, etc.",
+    "yes": "sí",
+    "no": "no",
+    "name1": "Nombre 1",
+    "add-another-name": "+ Agregar otro nombre",
+    "telecode-header": "¿Hay un clave telecode que represente su nombre?",
+    "telecode-hint": "Un clave telecode es un numero de 4 dígitos que representa letras/símbolos en algunos nombres de alfabetos no romanos",
+    "submit": "Siguiente"
+  },
+  "PassportDetails": {
+    "header": "Detalles del Pasaporte",
+    "doc-type-header": "¿Qué tipo de pasaporte o documento de viaje tiene?",
+    "required-fields": "Los campos marcados con un asterisco son obligatorios",
+    "doc-type-hint": "Ingrese la información del documento de viaje que utilizará al viajar a los EE. UU.",
+    "doc-type-select-label": "Su documento de viaje debe ser un pasaporte válido y no vencido u otra documentación válida y no vencida que sea suficiente para establecer su identidad y nacionalidad.",
+    "issuer-header": "¿Quién emitió su pasaporte?",
+    "issuer-select-label": "Elija el país o la autoridad que emitió el documento que utilizará para viajar a los Estados Unidos.",
+    "issuer-select-option": "Seleccione país / autoridad",
+    "regular-passport": "Pasaporte regular / de turista",
+    "book-number-header": "Número de libro del pasaporte",
+    "book-number-hint": "El número de libro del pasaporte se conoce comúnmente como el número de control de inventario. Es posible que su pasaporte tenga o no un número de libro del pasaporte.",
+    "book-number-label": "La ubicación del número de libro del pasaporte en su pasaporte puede variar según el país que emitió su pasaporte. Comuníquese con la autoridad emisora de su pasaporte si no puede determinar si su pasaporte contiene un número de libro del pasaporte.",
+    "no-book-number-label": "Mi pasaporte no tiene un número",
+    "issuance-date": "Fecha de emisión",
+    "month": "Mes",
+    "day": "Día",
+    "year": "Año",
+    "expiration-date": "Fecha de vencimiento",
+    "submit": "Continuar",
+    "january": "01 - Enero",
+    "february": "02 - Febrero",
+    "march": "03 - Marzo",
+    "april": "04 - Abril",
+    "may": "05 - Mayo",
+    "june": "06 - Junio",
+    "july": "07 - Julio",
+    "august": "08 - Agosto",
+    "september": "09 - Septiembre",
+    "october": "10 - Octubre",
+    "november": "11 - Noviembre",
+    "december": "12 - Diciembre"
+  },
+  "AppHeader": {
+    "home": "Hogar",
+    "project-name": "Solicitud de DS-160",
+    "my-account": "Mi Cuenta",
+    "application": "Solicitud",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión",
+    "resources": "Recursos"
+  },
+  "ApplicationLayout": {
+    "getting-started": "Comenzando",
+    "travel": "Viaje",
+    "family": "Familia",
+    "work-education": "Trabajo y Educación",
+    "us-contacts": "Contactos en EE.UU.",
+    "security": "Seguridad",
+    "passport-details": "Detalles del Pasaporte",
+    "name": "Nombre"
+  }
+}
