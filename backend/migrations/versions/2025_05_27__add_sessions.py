@@ -27,7 +27,7 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Integer(), sa.ForeignKey("user.id"), nullable=False),
         sa.Column(
             "last_active_at",
-            sa.DateTime(),
+            sa.DateTime(timezone=True),
             nullable=False,
             server_default=sa.func.now(),
         ),

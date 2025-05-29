@@ -14,14 +14,13 @@ class Session(Base):
     )
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
     last_active_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime,
+        DateTime(timezone=True),
         default=lambda: datetime.datetime.now(datetime.timezone.utc),
         index=True,
     )
 
     def is_expired(self) -> bool:
-        last_active_time = self.last_active_at
-        if last_active_time.tzinfo is None:
-            last_active_time = last_active_time.replace(tzinfo=datetime.timezone.utc)
         current = datetime.datetime.now(datetime.timezone.utc)
-        return (current - last_active_time).total_seconds() > SESSION_EXPIRATION_SECONDS
+        return (
+            current - self.last_active_at
+        ).total_seconds() > SESSION_EXPIRATION_SECONDS
