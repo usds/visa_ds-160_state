@@ -6,6 +6,7 @@ import "@trussworks/react-uswds/lib/index.css";
 import "@/app/globals.css";
 
 import { getUsers } from "@/api/users";
+import { useLogin } from "@/providers/UserContext";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@trussworks/react-uswds";
 import Link from "next/link";
@@ -20,6 +21,8 @@ export const Login = () => {
     queryFn: getUsers,
   });
 
+  const { mutate: loginUser, isPending: loginPending } = useLogin();
+
   return (
     <div>
       <h1>Login</h1>
@@ -33,11 +36,14 @@ export const Login = () => {
         ) : (
           users.map((user) => (
             <li key={user.email} className="margin-bottom-1">
-              <Link href={`/account/${user.email}/applications`}>
-                <Button type="button" key={user.email}>
-                  Log in as {user.email}
-                </Button>
-              </Link>
+              <Button
+                type="button"
+                key={user.email}
+                onClick={() => loginUser(user.email)}
+                disabled={loginPending}
+              >
+                Log in as {user.email}
+              </Button>
             </li>
           ))
         )}

@@ -1,15 +1,5 @@
-// TODO: baseUrl as env variable
 import { User } from "@/types";
-
-const baseURL = "http://localhost:8000/api";
-
-async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json();
-}
+import { fetchJson, baseURL } from "./fetchJson";
 
 export const getUsers = (): Promise<User[]> =>
   fetchJson(`${baseURL}/users/`, { cache: "no-store" });

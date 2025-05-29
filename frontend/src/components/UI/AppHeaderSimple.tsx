@@ -12,9 +12,12 @@ import {
   Menu,
 } from "@trussworks/react-uswds";
 import { useTranslations } from "next-intl";
+import { useUser, useLogout } from "@/providers/UserContext";
 
 function AppHeaderSimple() {
   const t = useTranslations("AppHeader");
+  const { user } = useUser();
+  const { mutate: logoutUser } = useLogout();
 
   const [mobileNavIsExpanded, setMobileNavIsExpanded] = useState(false);
   const onClick = (): void =>
@@ -41,14 +44,20 @@ function AppHeaderSimple() {
     setMenuIsOpen(newMenuIsOpen);
   };
 
-  const myAccountMenuItems = [
-    <Link href="#linkOne" key="profile" asCustom={NextLink}>
-      {t("profile")}
-    </Link>,
-    <Link href="/account/login/" key="logout" asCustom={NextLink}>
-      {t("logout")}
-    </Link>,
-  ];
+  const myAccountMenuItems = !user
+    ? [
+        <Link href="/account/login/" key="login" asCustom={NextLink}>
+          {t("login")}
+        </Link>,
+      ]
+    : [
+        <Link href="/account/profile" key="profile" asCustom={NextLink}>
+          {t("profile")}
+        </Link>,
+        <Link href="/account/login/" key="logout" onClick={logoutUser}>
+          {t("logout")}
+        </Link>,
+      ];
 
   const myApplicationMenuItems = [
     <Link href="#linkOne" key="one" asCustom={NextLink}>
