@@ -26,11 +26,10 @@ export const Login = () => {
   const router = useRouter();
   const { mutate, isPending: loginPending } = useMutation({
     mutationFn: login,
-    onMutate: () => {},
     onSuccess: (user) => {
       queryClient.setQueryData(["sessionuser"], user);
       router.push("/account/profile");
-      return queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["sessionuser"],
       });
     },

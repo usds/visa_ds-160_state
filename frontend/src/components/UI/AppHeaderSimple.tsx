@@ -12,7 +12,7 @@ import {
   Menu,
 } from "@trussworks/react-uswds";
 import { useTranslations } from "next-intl";
-import { useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { logout } from "@/api/session";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/providers/UserContext";
@@ -20,6 +20,7 @@ import { useUser } from "@/providers/UserContext";
 function AppHeaderSimple() {
   const t = useTranslations("AppHeader");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { user } = useUser();
 
   const [mobileNavIsExpanded, setMobileNavIsExpanded] = useState(false);
@@ -50,8 +51,9 @@ function AppHeaderSimple() {
   const { mutate } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      // redirect to login page
+      queryClient.setQueryData(["sessionuser"], null);
       router.push("/account/login");
+      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
     },
   });
   const handleLogout = (): void => {

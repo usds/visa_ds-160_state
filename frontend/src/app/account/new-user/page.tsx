@@ -15,7 +15,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { createUser } from "@/api/users";
 
 export default function NewUserPage() {
-  const queryclient = useQueryClient();
+  const queryClient = useQueryClient();
   type UserFormInput = {
     email: string;
   };
@@ -32,8 +32,9 @@ export default function NewUserPage() {
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
     onSuccess: (newUser) => {
-      queryclient.setQueryData(["sessionuser"], newUser);
+      queryClient.setQueryData(["sessionuser"], newUser);
       router.push(`/account/profile`);
+      queryClient.invalidateQueries({queryKey: ["sessionuser"]});
     },
     onError: (error) => {
       setError("root", { message: error.message });
