@@ -8,6 +8,7 @@ import { Grid, GridContainer } from "@trussworks/react-uswds";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import AppHeaderSimple from "@/components/UI/AppHeaderSimple";
 import AppBanner from "@/components/UI/AppBanner";
@@ -33,6 +34,7 @@ export default async function RootLayout({
           <GridContainer className="usa-section">
             <Grid>
               <Providers>
+              <ReactQueryDevtools initialIsOpen={false} />
                 <main>{children}</main>
               </Providers>
             </Grid>
