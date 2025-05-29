@@ -14,7 +14,7 @@ import AppHeaderSimple from "@/components/UI/AppHeaderSimple";
 import AppBanner from "@/components/UI/AppBanner";
 import QueryProvider from "@/providers/QueryContext";
 import { UserProvider } from "@/providers/UserContext";
-import { getUserFromSession } from "@/api/session";
+import { getUserFromSessionSSR } from "@/api/session-ssr";
 
 export const metadata: Metadata = {
   title: "U.S. Department of State - Consular Electronic Application Center",
@@ -32,7 +32,7 @@ export default async function RootLayout({
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["sessionuser"],
-    queryFn: getUserFromSession,
+    queryFn: getUserFromSessionSSR,
   });
   const dehydratedState = dehydrate(queryClient);
 

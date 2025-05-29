@@ -4,7 +4,7 @@ export async function fetchJson<T>(
   url: string,
   options?: RequestInit,
 ): Promise<T> {
-  options["credentials"] = "include"; // Include cookies in the request
+  options = { ...options, credentials: "include" };
   const response = await fetch(url, options);
   if (!response.ok) {
     throw {

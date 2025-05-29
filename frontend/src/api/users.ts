@@ -1,5 +1,5 @@
 import { User } from "@/types";
-import { fetchJson, baseURL } from "./utils";
+import { fetchJson, baseURL } from "./fetchJson";
 
 export const getUsers = (): Promise<User[]> =>
   fetchJson(`${baseURL}/users/`, { cache: "no-store" });

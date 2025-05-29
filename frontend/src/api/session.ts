@@ -1,4 +1,4 @@
-import { fetchJson, baseURL } from "./utils";
+import { fetchJson, baseURL } from "./fetchJson";
 import type { User } from "@/types";
 
 const sessionUrl = `${baseURL}/session`;

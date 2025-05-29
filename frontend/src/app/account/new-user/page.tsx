@@ -11,10 +11,11 @@ import {
   Label,
   TextInput,
 } from "@trussworks/react-uswds";
-import { useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { createUser } from "@/api/users";
 
 export default function NewUserPage() {
+  const queryclient = useQueryClient();
   type UserFormInput = {
     email: string;
   };
@@ -31,7 +32,8 @@ export default function NewUserPage() {
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
     onSuccess: (newUser) => {
-      router.push(`/account/${newUser.email}/applications`);
+      queryclient.setQueryData(["sessionuser"], newUser);
+      router.push(`/account/profile`);
     },
     onError: (error) => {
       setError("root", { message: error.message });

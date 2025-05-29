@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const Login = () => {
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const {
     data: users,
     isLoading,
@@ -28,9 +28,9 @@ export const Login = () => {
     mutationFn: login,
     onMutate: () => {},
     onSuccess: (user) => {
-      QueryClient.setQueryData(["sessionuser"], user);
+      queryClient.setQueryData(["sessionuser"], user);
       router.push("/account/profile");
-      return QueryClient.invalidateQueries({
+      return queryClient.invalidateQueries({
         queryKey: ["sessionuser"],
       });
     },
