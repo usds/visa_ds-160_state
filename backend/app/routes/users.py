@@ -1,70 +1,74 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from app.models.user_model import User as UserModel
+from app.models.session_model import Session as SessionModel
 from app.models.application_model import Application as ApplicationModel
-from app.schemas.user import User, UserWithApplications
-from app.schemas.application import Application, ApplicationData
-from app.db import get_session
+from app.schemas.user import User
+from app.db import get_db
+from app.dependencies.session import get_current_user
+
+import uuid
 
 router = APIRouter()
 
 
 @router.post("/", response_model=User)
-async def create_user(user: User, session: Session = Depends(get_session)):
+async def create_user(
+    user: User, db: Session = Depends(get_db), response: Response = None
+):
     existing_user = (
-        session.query(UserModel).filter(UserModel.email == user.email).one_or_none()
+        db.query(UserModel).filter(UserModel.email == user.email).one_or_none()
     )
     if existing_user:
         raise HTTPException(
             status_code=409, detail="User with this email already exists"
         )
     db_user = UserModel(email=user.email)
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+
+    # Log the user in by creating a session and setting the cookie
+    session_id = str(uuid.uuid4())
+    db_session = SessionModel(id=session_id, user_id=db_user.id)
+    db.add(db_session)
+    db.commit()
+    db.refresh(db_session)
+    if response is not None:
+        response.set_cookie(
+            key="session_id", value=session_id, httponly=True, samesite="lax"
+        )
     return User(email=db_user.email)
 
 
-@router.get("/{email}", response_model=UserWithApplications)
-async def get_user(email: str, session: Session = Depends(get_session)):
-    db_user = session.query(UserModel).filter(UserModel.email == email).one_or_none()
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
-    db_applications = (
-        session.query(ApplicationModel)
-        .filter(ApplicationModel.user == db_user.id)
-        .all()
-    )
-    applications = [
-        Application(
-            user_email=db_user.email,
-            id=app.id,
-            data=ApplicationData(**(app.data or {})),
-        )
-        for app in db_applications
-    ]
-    return UserWithApplications(email=db_user.email, applications=applications)
-
-
 @router.get("/", response_model=list[User])
-async def get_all_users(session: Session = Depends(get_session)):
-    users_query = session.query(UserModel)
+async def get_all_users(db: Session = Depends(get_db)):
+    users_query = db.query(UserModel)
     return [User(email=db_user.email) for db_user in users_query.all()]
 
 
-@router.delete("/{email}")
-async def delete_user(email: str, session: Session = Depends(get_session)):
-    user = session.query(UserModel).filter(UserModel.email == email).one_or_none()
+@router.delete("/delete_current_user")
+async def delete_user(
+    db: Session = Depends(get_db),
+    current_user: UserModel = Depends(get_current_user),
+):
+    user = (
+        db.query(UserModel).filter(UserModel.email == current_user.email).one_or_none()
+    )
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     applications = (
-        session.query(ApplicationModel).filter(ApplicationModel.user == user.id).all()
+        db.query(ApplicationModel).filter(ApplicationModel.user == user.id).all()
     )
     if applications:
         raise HTTPException(
             status_code=400,
             detail="User has applications and cannot be deleted",
         )
-    session.delete(user)
-    session.commit()
+    # Delete user sessions
+    db.query(SessionModel).filter(SessionModel.user_id == user.id).delete(
+        synchronize_session=False
+    )
+    db.delete(user)
+    db.commit()
     return {"user deleted": user.email}

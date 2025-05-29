@@ -11,20 +11,15 @@
 		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
+
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
-	"forwardPorts": [
-		5432,
-		8000
-	],
+	"forwardPorts": [5432, 8000],
 	"portsAttributes": {
-		"8000": {
-			"label": "backend"
-		},
-		"5432": {
-			"label": "postgres"
-		}
+		"8000": {"label": "backend"},
+		"5432": {"label": "postgres"}
 	},
+
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
