@@ -12,16 +12,12 @@ import {
   Menu,
 } from "@trussworks/react-uswds";
 import { useTranslations } from "next-intl";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { logout } from "@/api/session";
-import { useRouter } from "next/navigation";
-import { useUser } from "@/providers/UserContext";
+import { useUser, useLogout } from "@/providers/UserContext";
 
 function AppHeaderSimple() {
   const t = useTranslations("AppHeader");
-  const router = useRouter();
-  const queryClient = useQueryClient();
   const { user } = useUser();
+  const { mutate: logoutUser } = useLogout();
 
   const [mobileNavIsExpanded, setMobileNavIsExpanded] = useState(false);
   const onClick = (): void =>
@@ -48,18 +44,6 @@ function AppHeaderSimple() {
     setMenuIsOpen(newMenuIsOpen);
   };
 
-  const { mutate } = useMutation({
-    mutationFn: logout,
-    onSuccess: () => {
-      queryClient.setQueryData(["sessionuser"], null);
-      router.push("/account/login");
-      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
-    },
-  });
-  const handleLogout = (): void => {
-    mutate();
-  };
-
   const myAccountMenuItems = !user
     ? [
         <Link href="/account/login/" key="login" asCustom={NextLink}>
@@ -70,7 +54,7 @@ function AppHeaderSimple() {
         <Link href="/account/profile" key="profile" asCustom={NextLink}>
           {t("profile")}
         </Link>,
-        <Link href="/account/login/" key="logout" onClick={handleLogout}>
+        <Link href="/account/login/" key="logout" onClick={logoutUser}>
           {t("logout")}
         </Link>,
       ];

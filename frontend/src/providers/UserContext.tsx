@@ -1,8 +1,9 @@
 "use client";
 
 import React, { createContext, ReactNode, useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getUserFromSession } from "@/api/session";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { getUserFromSession, login, logout } from "@/api/session";
 import type { User } from "@/types";
 
 type UserContextType = {
@@ -40,3 +41,29 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 };
 
 export const useUser = () => useContext(UserContext);
+
+export function useLogin() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: login,
+    onSuccess: (user) => {
+      queryClient.setQueryData(["sessionuser"], user);
+      router.push("/account/profile");
+      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
+    },
+  });
+}
+
+export function useLogout() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.setQueryData(["sessionuser"], null);
+      router.push("/account/login");
+      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
+    },
+  });
+}

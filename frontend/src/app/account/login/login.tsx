@@ -6,14 +6,12 @@ import "@trussworks/react-uswds/lib/index.css";
 import "@/app/globals.css";
 
 import { getUsers } from "@/api/users";
-import { login } from "@/api/session";
-import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useLogin } from "@/providers/UserContext";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@trussworks/react-uswds";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export const Login = () => {
-  const queryClient = useQueryClient();
   const {
     data: users,
     isLoading,
@@ -23,21 +21,7 @@ export const Login = () => {
     queryFn: getUsers,
   });
 
-  const router = useRouter();
-  const { mutate, isPending: loginPending } = useMutation({
-    mutationFn: login,
-    onSuccess: (user) => {
-      queryClient.setQueryData(["sessionuser"], user);
-      router.push("/account/profile");
-      queryClient.invalidateQueries({
-        queryKey: ["sessionuser"],
-      });
-    },
-  });
-
-  const loginUser = (email: string) => {
-    mutate(email);
-  };
+  const { mutate: loginUser, isPending: loginPending } = useLogin();
 
   return (
     <div>

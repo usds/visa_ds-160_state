@@ -1,4 +1,5 @@
 // TODO: baseUrl as env variable
+// https://github.com/usds/visa_ds-160_state/issues/18
 export const baseURL = "http://localhost:8000/api";
 export async function fetchJson<T>(
   url: string,
