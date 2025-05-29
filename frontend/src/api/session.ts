@@ -15,7 +15,7 @@ export const getUserFromSession = async (): Promise<User | null> => {
   }
 };
 
-export const login = (email: string) =>
+export const login = (email: string): Promise<User> =>
   fetchJson(`${sessionUrl}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
