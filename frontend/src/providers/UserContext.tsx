@@ -31,6 +31,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     queryKey: ["sessionuser"],
     queryFn: getUserFromSession,
     retry: false, // Non-logged in users should not retry
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    // Can sometimes cause issues with stale data
+    // but some amount of time is needed to hydrate this server-side
+    staleTime: 60_000,  // 1 minute
   });
 
   return (
