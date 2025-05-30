@@ -51,10 +51,10 @@ export const Applications = () => {
                 {applications.map((application) => (
                   <tr key={application.id}>
                     <th scope="row">
-                      {`${application.data.givenName} ${application.data.surname}`}
+                      {`${application.data.givenName ?? ""} ${application.data.surname ?? ""}`}
                     </th>
                     <td>
-                      {application.data.visaType}
+                      {application.data.visaType ?? "Not specified"}
                     </td>
                     <td>
                       <Link href={`/application/${application.id}/names`} asCustom={NextLink}>Edit</Link>
@@ -65,14 +65,14 @@ export const Applications = () => {
                       Incomplete
                     </td>
                     <td>
-                      {application.lastModifiedAt.toLocaleDateString()}
+                      {application.lastModifiedAt?.toLocaleDateString()}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table><Link onClick={handleNewApplication}>
                 <Button type="button" accentStyle="warm">
-                  Add User
+                  Add Application
                 </Button>
               </Link></>
       }
@@ -80,7 +80,7 @@ export const Applications = () => {
       <p>You don&#39;t have any in-progress applications.</p>
       <Link onClick={handleNewApplication}>
                 <Button type="button" accentStyle="warm">
-                  Add User
+                  Add Application
                 </Button>
               </Link>
     </div>
