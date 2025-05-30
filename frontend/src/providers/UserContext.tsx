@@ -55,7 +55,7 @@ export function useLogin() {
     onSuccess: (user) => {
       queryClient.setQueryData(["sessionuser"], user);
       router.push("/account/profile");
-      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
+      queryClient.invalidateQueries();
     },
   });
 }
@@ -68,7 +68,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.setQueryData(["sessionuser"], null);
       router.push("/account/login");
-      queryClient.invalidateQueries({ queryKey: ["sessionuser"] });
+      queryClient.invalidateQueries();
     },
   });
 }

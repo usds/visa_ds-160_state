@@ -34,7 +34,7 @@ export default function NewUserPage() {
     onSuccess: (newUser) => {
       queryClient.setQueryData(["sessionuser"], newUser);
       router.push(`/account/profile`);
-      queryClient.invalidateQueries({queryKey: ["sessionuser"]});
+      queryClient.invalidateQueries();
     },
     onError: (error) => {
       setError("root", { message: error.message });
