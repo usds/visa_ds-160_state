@@ -14,8 +14,9 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// This can be used to network with other containers or the host.
-	"forwardPorts": [5432, 8000],
+	"forwardPorts": [3000, 5432, 8000],
 	"portsAttributes": {
+		"3000": {"label": "frontend"},
 		"8000": {"label": "backend"},
 		"5432": {"label": "postgres"}
 	},
@@ -28,7 +29,8 @@
 			"extensions": [
 				"ms-python.python",
 				"ms-python.vscode-pylance",
-				"ms-python.black-formatter"
+				"ms-python.black-formatter",
+				"esbenp.prettier-vscode"
 			],
 			// Set *default* container specific settings.json values on container create.
 			"settings": {

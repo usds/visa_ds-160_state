@@ -37,14 +37,10 @@ services:
   
   frontend:
     build:
+      dockerfile: prod.Dockerfile
       context: ./frontend
-      target: dev
-    restart: always
-    command: npm run dev
     ports:
-      - "127.0.0.1:3000:3000"
+      - "3000:3000"
  
-
-
 volumes:
   postgres-data:
