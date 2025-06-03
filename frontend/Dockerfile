@@ -45,8 +45,8 @@ EXPOSE $PORT
 ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
 
-# FROM base as dev
-# ENV NODE_ENV=development
-# RUN npm install 
-# COPY . .
-# CMD npm run dev
+FROM base as dev
+ENV NODE_ENV=development
+WORKDIR /app
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY . .
