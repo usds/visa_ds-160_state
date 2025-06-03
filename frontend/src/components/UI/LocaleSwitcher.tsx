@@ -11,7 +11,6 @@ export default function LocaleSwitcher() {
   const locale = useLocale();
   const [isPending, startTransition] = useTransition();
 
-  // TODO use label_local somehow
   // https://trussworks.github.io/react-uswds/?path=/docs/components-languageselector--docs
   const items: { value: Locale; label: string; label_local: string }[] =
     Object.entries(locales).map(([key, value]) => ({
@@ -28,7 +27,7 @@ export default function LocaleSwitcher() {
 
   const langs = items.map((item) => ({
     attr: item.value,
-    label: item.label,
+    label: item.label_local,
     on_click: () => {
       onChange(item.value);
     },
