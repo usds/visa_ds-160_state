@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, Cookie
 from sqlalchemy.orm import Session
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from app.models.user_model import User as UserModel
 from app.models.session_model import Session as SessionModel
 from app.schemas.session import Session as SessionSchema
@@ -21,6 +23,11 @@ async def login(info: LoginInfo, response: Response, db: Session = Depends(get_d
     user = db.query(UserModel).filter(UserModel.email == info.email).one_or_none()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    ph = PasswordHasher()
+    try:
+        ph.verify(user.password, info.password)
+    except VerifyMismatchError:
+        raise HTTPException(status_code=401, detail="Incorrect password")
     # Create session
     session_id = str(uuid.uuid4())
     db_session = SessionModel(id=session_id, user_id=user.id)

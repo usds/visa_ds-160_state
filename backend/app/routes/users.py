@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
+from argon2 import PasswordHasher
 from app.models.user_model import User as UserModel
 from app.models.session_model import Session as SessionModel
 from app.models.application_model import Application as ApplicationModel
@@ -23,7 +24,11 @@ async def create_user(
         raise HTTPException(
             status_code=409, detail="User with this email already exists"
         )
-    db_user = UserModel(email=user.email)
+
+    ph = PasswordHasher()
+    password_hash = ph.hash(user.password.get_secret_value)
+    
+    db_user = UserModel(email=user.email, password=str(password_hash))
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -38,13 +43,13 @@ async def create_user(
         response.set_cookie(
             key="session_id", value=session_id, httponly=True, samesite="lax"
         )
-    return User(email=db_user.email)
+    return User(email=db_user.email, password=db_user.password)
 
 
 @router.get("/", response_model=list[User])
 async def get_all_users(db: Session = Depends(get_db)):
     users_query = db.query(UserModel)
-    return [User(email=db_user.email) for db_user in users_query.all()]
+    return [User(email=db_user.email, password=db_user.password) for db_user in users_query.all()]
 
 
 @router.delete("/delete_current_user")

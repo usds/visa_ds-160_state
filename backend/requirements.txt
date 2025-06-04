@@ -4,3 +4,4 @@ asyncpg
 sqlalchemy
 alembic
 psycopg2
+argon2-cffi
