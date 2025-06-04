@@ -3,8 +3,6 @@
 FROM node:22-slim AS base
 
 ARG PORT=3000
-RUN corepack enable
-RUN yarn set version stable
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -14,6 +12,8 @@ FROM base AS dependencies
 
 COPY package.json yarn.lock .yarnrc.yml ./
 # RUN npm ci
+RUN corepack enable
+RUN yarn set version stable
 RUN yarn --immutable
 
 FROM base AS build

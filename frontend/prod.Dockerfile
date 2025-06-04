@@ -6,12 +6,15 @@ ARG PORT=3000
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN corepack enable
+RUN yarn set version stable
+
 WORKDIR /app
 
 FROM base AS dependencies
 
 COPY package.json yarn.lock .yarnrc.yml ./
-# RUN npm ci
+
 RUN yarn --immutable
 
 FROM base AS build
@@ -22,8 +25,8 @@ COPY . .
 # Public build-time environment variables
 # ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 # ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-
-RUN npm run build
+RUN yarn build
+# RUN npm run build
 
 FROM base AS run
 
