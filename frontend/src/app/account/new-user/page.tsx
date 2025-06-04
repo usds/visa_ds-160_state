@@ -17,6 +17,7 @@ import { createUser } from "@/api/users";
 export default function NewUserPage() {
   type UserFormInput = {
     email: string;
+    password: string;
   };
 
   const router = useRouter();
@@ -38,6 +39,8 @@ export default function NewUserPage() {
     },
   });
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const onSubmit: SubmitHandler<UserFormInput> = (userData) => {
     mutate(userData);
   };
@@ -56,6 +59,13 @@ export default function NewUserPage() {
             {"Email"}
           </Label>
           <TextInput id="email" required={true} {...register("email")} />
+          <Label htmlFor="password" requiredMarker>
+            {"Password"}
+          </Label>
+          <TextInput id="password-create-account" name="password" type={showPassword ? 'text' : 'password'} autoCapitalize="none" autoCorrect="off" required={true} {...register("password")} />
+          <button title="Show password" type="button" className="usa-show-password" aria-controls="password-create-account password-create-account-confirm" onClick={(): void => setShowPassword(showPassword => !showPassword)}>
+            {showPassword ? 'Hide password' : 'Show password'}
+          </button>
         </Fieldset>
         <Button type="submit" disabled={isPending}>
           {isPending ? "Submitting..." : "Submit"}

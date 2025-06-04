@@ -17,7 +17,7 @@ export const getUsers = (): Promise<User[]> =>
 export const getUserByEmail = (email: string): Promise<User> =>
   fetchJson(`${baseURL}/users/${email}/`, { cache: "no-store" });
 
-export const createUser = (user: { email: string }): Promise<User> =>
+export const createUser = (user: { email: string, password: string }): Promise<User> =>
   fetchJson(`${baseURL}/users/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

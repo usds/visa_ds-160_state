@@ -10,3 +10,4 @@ class Session(BaseModel):
 
 class LoginInfo(BaseModel):
     email: str
+    password: str
