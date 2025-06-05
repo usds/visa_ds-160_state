@@ -29,9 +29,9 @@ test:
     # - docker compose up -d
     # - docker compose exec app npm test
     # - docker compose down
-  only:
-    - merge_requests
-    - main
+  # only:
+  #   - merge_requests
+  #   - main
 
 deploy:
   stage: deploy
