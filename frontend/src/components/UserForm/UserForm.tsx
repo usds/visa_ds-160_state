@@ -37,9 +37,14 @@ const UserForm = (props: UserFormProps) => {
       )}
 
       <Label htmlFor="first-name">{t("first-name")}</Label>
-      <TextInput {...register("firstName")} required />
+      <TextInput
+        type="text"
+        id="firstName"
+        {...register("firstName")}
+        required
+      />
       <Label htmlFor="last-name">{t("last-name")}</Label>
-      <TextInput {...register("lastName")} required />
+      <TextInput type="text" id="lastName" {...register("lastName")} required />
       <Button type="submit">{t("submit")}</Button>
     </Form>
   );

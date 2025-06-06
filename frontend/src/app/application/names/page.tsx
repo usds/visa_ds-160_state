@@ -41,20 +41,35 @@ export default function NamePage() {
             {t("surnames-label")}
           </Label>
           <span className="usa-hint">{t("surnames-hint")}</span>
-          <TextInput id="surnames" required={true} />
+          <TextInput
+            id="surnames"
+            required={true}
+            name="surnames"
+            type="text"
+          />
 
           {/* Given names */}
           <Label htmlFor="givenNames" requiredMarker>
             {t("given-names-label")}
           </Label>
           <span className="usa-hint">{t("given-names-hint")}</span>
-          <TextInput id="givenNames" required={true} />
+          <TextInput
+            id="givenNames"
+            required={true}
+            type="text"
+            name="givenNames"
+          />
 
           {/* Native Alphabet */}
           <Label htmlFor="nativeAlphabetName" requiredMarker>
             {t("native-alphabet-label")}
           </Label>
-          <TextInput id="nativeAlphabetName" required={true} />
+          <TextInput
+            id="nativeAlphabetName"
+            required={true}
+            type="text"
+            name="nativeAlphabetName"
+          />
           <Checkbox
             id="nativeAlphabetDoesNotApply"
             name="nativeAlphabetDoesNotApply"
@@ -77,7 +92,12 @@ export default function NamePage() {
           <Label htmlFor="previous-name-1" requiredMarker>
             {t("name1")}
           </Label>
-          <TextInput id="previous-name-1" required={true} />
+          <TextInput
+            id="previous-name-1"
+            required={true}
+            type="text"
+            name="previousName1"
+          />
           <Button type="button" outline>
             {t("add-another-name")}
           </Button>

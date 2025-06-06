@@ -69,7 +69,12 @@ export default function PassportDetailsPage() {
             <Label htmlFor="book-number" requiredMarker>
               {t("book-number-label")}
             </Label>
-            <TextInput name="book-number" id="book-number" required />
+            <TextInput
+              name="book-number"
+              id="book-number"
+              required
+              type="number"
+            />
             <Checkbox
               id="no-book-number-checkbox"
               name="no-book-number-checkbox"
