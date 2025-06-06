@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   // output: "export",
   trailingSlash: true,
   images: { unoptimized: true },
+  allowedDevOrigins: ['localhost', '0.0.0.0', '127.0.0.1']
 };
 
 const withNextIntl = createNextIntlPlugin();
