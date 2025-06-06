@@ -2846,10 +2846,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.79.2":
-  version: 5.79.2
-  resolution: "@tanstack/query-core@npm:5.79.2"
-  checksum: 10c0/d2a72c99e967748f77c92301413bfa13a333de0900d4995131d165ebf04445a582ec322aa009e9d2eb5ec6a34821f5ba6c029fdd13893550255fc8d1b225bee0
+"@tanstack/query-core@npm:5.80.6":
+  version: 5.80.6
+  resolution: "@tanstack/query-core@npm:5.80.6"
+  checksum: 10c0/ce52d962036bf84845c9dafb654075bbc8eafd9236069b7c234b7f72a30e4e61daf222940d9f28b4359858277cc1e1d08dd1f8e6cc0adac72acc083fc5c0195c
   languageName: node
   linkType: hard
 
@@ -2872,14 +2872,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.76.2":
-  version: 5.79.2
-  resolution: "@tanstack/react-query@npm:5.79.2"
+"@tanstack/react-query@npm:^5.80.2":
+  version: 5.80.6
+  resolution: "@tanstack/react-query@npm:5.80.6"
   dependencies:
-    "@tanstack/query-core": "npm:5.79.2"
+    "@tanstack/query-core": "npm:5.80.6"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/927969a55437f20e52473e94f03840835da52a1e5ecd8fb87c4d3e6690cf39d7219e29813388ea724ee391d71d8f69589f8c33c6900c3b39b597f1d8139c70d3
+  checksum: 10c0/ec2dc548ff28d92778e851d64b0c24e3289218b496694c0b7bed1e92b5b96b03f8b047d4a8a04c6924937c56e257d53fbe42e046745da10d9dababe48505f843
   languageName: node
   linkType: hard
 
@@ -6122,22 +6122,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-trap-react@npm:^11.0.4":
-  version: 11.0.4
-  resolution: "focus-trap-react@npm:11.0.4"
+"focus-trap-react@npm:^10.2.3":
+  version: 10.3.1
+  resolution: "focus-trap-react@npm:10.3.1"
   dependencies:
-    focus-trap: "npm:^7.6.5"
+    focus-trap: "npm:^7.6.1"
     tabbable: "npm:^6.2.0"
   peerDependencies:
-    "@types/react": ^18.0.0 || ^19.0.0
-    "@types/react-dom": ^18.0.0 || ^19.0.0
-    react: ^18.0.0 || ^19.0.0
-    react-dom: ^18.0.0 || ^19.0.0
-  checksum: 10c0/c1b5bd29e8b226715e697202c540f28fa2cd47974b88d15b144e84422bcd199dab1bc461a491d7d36c97744d91087fc949984ddf71ddc867f4f971af0bf0aa30
+    prop-types: ^15.8.1
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  checksum: 10c0/ac39d46e5bc4eacfc3465915fe8c223283a99ae743afa73412416238b633fc0af19df023dca469945639b9151fc1572c59985f978405f1db9fe8f4c23f3db1a2
   languageName: node
   linkType: hard
 
-"focus-trap@npm:^7.6.5":
+"focus-trap@npm:^7.6.1":
   version: 7.6.5
   resolution: "focus-trap@npm:7.6.5"
   dependencies:
@@ -10845,7 +10844,7 @@ __metadata:
     "@storybook/nextjs": "npm:^8.6.11"
     "@storybook/react": "npm:^8.6.11"
     "@storybook/test": "npm:^8.6.11"
-    "@tanstack/react-query": "npm:^5.76.2"
+    "@tanstack/react-query": "npm:^5.80.2"
     "@tanstack/react-query-devtools": "npm:^5.79.0"
     "@trussworks/react-uswds": "npm:^9.1.0"
     "@types/node": "npm:22.13.1"
@@ -10856,7 +10855,7 @@ __metadata:
     eslint-config-next: "npm:15.1.6"
     eslint-config-prettier: "npm:^10.1.1"
     eslint-plugin-storybook: "npm:^0.12.0"
-    focus-trap-react: "npm:^11.0.4"
+    focus-trap-react: "npm:^10.2.3"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^15.5.0"
     next: "npm:^15.3.1"
