@@ -15,17 +15,16 @@ FROM base AS dependencies
 COPY package.json yarn.lock .yarnrc.yml ./
 # RUN npm ci
 RUN yarn --immutable
+# TODO move this to a separate testing layer?
+RUN sudo yarn playwright install-deps    
+
 
 FROM base AS build
 
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 
-# Public build-time environment variables
-# ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-# ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-
-RUN npm run build
+RUN yarn build
 
 FROM base AS run
 
@@ -52,4 +51,7 @@ FROM base as dev
 ENV NODE_ENV=development
 WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
+# COPY the playwright install to the dev container?
+# RUN yarn playwright install
+# COPY --from=dependencies /app/.cache ./.cache
 COPY . .
