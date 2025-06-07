@@ -1,8 +1,11 @@
+"use client";
 import "../globals.css";
 import "@trussworks/react-uswds/lib/uswds.css";
 import "@trussworks/react-uswds/lib/index.css";
 
 import { Grid, Link, SideNav } from "@trussworks/react-uswds";
+import { ApplicationNavLink } from "@/components/Form/ApplicationNav";
+import { usePathname } from "next/navigation";
 
 import { useTranslations } from "next-intl";
 
@@ -12,40 +15,31 @@ export default function ApplicationLayout({
   children: React.ReactNode;
 }>) {
   const t = useTranslations("ApplicationLayout");
+  console.log(usePathname());
 
   const gettingStartedSubItems = [
-    <Link href="#" className="usa-current" key="passport-details">
-      {t("passport-details")}
-    </Link>,
-    <Link href="#" key="name">
-      {t("name")}
-    </Link>,
+    <ApplicationNavLink location="passport-details"/>,
+    <ApplicationNavLink location="names"/>,
   ];
   const sideNavItems = [
     // TODO: State management - highlight current and open subnavs
-    <Link href="#" key="getting-started" className="usa-current">
-      {t("getting-started")}
-    </Link>,
+    <ApplicationNavLink
+      location="getting-started"
+      active={
+        usePathname() === "/application/passport-details/" ||
+        usePathname() === "/application/names/"
+      }
+    />,
     <SideNav
       key="getting-started-sub"
       items={gettingStartedSubItems}
       isSubnav={true}
     />,
-    <Link href="#" key="travel">
-      {t("travel")}
-    </Link>,
-    <Link href="#" key="family">
-      {t("family")}
-    </Link>,
-    <Link href="#" key="work-education">
-      {t("work-education")}
-    </Link>,
-    <Link href="#" key="us-contacts">
-      {t("us-contacts")}
-    </Link>,
-    <Link href="#" key="security">
-      {t("security")}
-    </Link>,
+    <ApplicationNavLink location="travel"/>,
+    <ApplicationNavLink location="family"/>,
+    <ApplicationNavLink location="work-education"/>,
+    <ApplicationNavLink location="us-contacts"/>,
+    <ApplicationNavLink location="security"/>,
   ];
   return (
     <Grid row>
