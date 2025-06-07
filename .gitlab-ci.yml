@@ -22,13 +22,15 @@ build:
   # only:
   #   - main
 
+# TODO create a testing image here with playwright
 test:
   stage: test
   script:
     - echo "Running unit tests... This will take about 60 seconds."
-    # - docker compose up -d
+    - docker compose up -d
+    - docker exec frontend cd frontend && yarn test:prep && yarn test
     # - docker compose exec app npm test
-    # - docker compose down
+    - docker compose down
   # only:
   #   - merge_requests
   #   - main
