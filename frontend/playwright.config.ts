@@ -10,6 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
+ * See also https://github.com/ixartz/Next-js-Boilerplate/blob/main/playwright.config.ts
  */
 export default defineConfig({
   testDir: './tests',

@@ -5,6 +5,10 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  // https://github.com/vitest-dev/vitest/issues/6872
+  define: {
+    'process.env': JSON.stringify({})
+  },
   test: {
     coverage: {
       provider: 'v8', // or 'istanbul'

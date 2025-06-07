@@ -15,6 +15,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest run --browser.headless",
+    "test:prep": "yarn playwright install --with-deps",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
