@@ -22,7 +22,6 @@ export default function ApplicationLayout({
     <ApplicationNavLink location="names"/>,
   ];
   const sideNavItems = [
-    // TODO: State management - highlight current and open subnavs
     <ApplicationNavLink
       location="getting-started"
       active={
